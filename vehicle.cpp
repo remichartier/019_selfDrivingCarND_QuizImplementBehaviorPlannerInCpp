@@ -49,6 +49,7 @@ vector<Vehicle> Vehicle::choose_next_state(map<int, vector<Vehicle>> &prediction
     
     // only consider states which can be reached from current FSM state.
     vector<string> possible_successor_states = successor_states();
+    vector<vector<Vehicle>> trajectories;
     
     // keep track of the total cost of each state.
     vector<float> costs;
@@ -58,17 +59,25 @@ vector<Vehicle> Vehicle::choose_next_state(map<int, vector<Vehicle>> &prediction
       // string state, map<int, vector<Vehicle>> &predictions
       vector<Vehicle> trajectory_for_state = generate_trajectory(possible_successor_states[j],\
                                                                 predictions);
+      trajectories.push_back(trajectory_for_state);
+      
       // calculate the "cost" associated with that trajectory.
       // calculate_cost(const Vehicle &vehicle, 
       //                 const map<int, vector<Vehicle>> &predictions, 
       //                 const vector<Vehicle> &trajectory)
-            float cost_for_state = calculate_cost();
+      float cost_for_state = calculate_cost(*this, predictions,trajectory_for_state);
+      costs.push_back(cost_for_state);
     }
-
+    
+    // find index of lowest cost
+    int min_index = std::min_element( costs.begin(), costs.end() - costs.begin() );
+    
+  
   /**
    * TODO: Change return value here:
    */
-  return generate_trajectory("KL", predictions);
+  // return generate_trajectory("KL", predictions);
+  return trajectories[min_index];
 }
 
 vector<string> Vehicle::successor_states() {
@@ -314,4 +323,3 @@ void Vehicle::configure(vector<int> &road_data) {
   goal_lane = road_data[3];
   max_acceleration = road_data[4];
 }
-
