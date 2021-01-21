@@ -54,10 +54,10 @@ vector<Vehicle> Vehicle::choose_next_state(map<int, vector<Vehicle>> &prediction
     // keep track of the total cost of each state.
     vector<float> costs;
     //  for state in possible_successor_states:
-    for(int j=0;j<possible_successor_states.size();++j){
+    for(int i=0;i<possible_successor_states.size();++i){
       // generate a rough idea of what trajectory we would follow IF we chose this state.
       // string state, map<int, vector<Vehicle>> &predictions
-      vector<Vehicle> trajectory_for_state = generate_trajectory(possible_successor_states[j],\
+      vector<Vehicle> trajectory_for_state = generate_trajectory(possible_successor_states[i],\
                                                                 predictions);
       trajectories.push_back(trajectory_for_state);
       
@@ -70,9 +70,15 @@ vector<Vehicle> Vehicle::choose_next_state(map<int, vector<Vehicle>> &prediction
     }
     
     // find index of lowest cost
-    int min_index = std::min_element( costs.begin(), costs.end() - costs.begin() );
+    int min_index;
+    float min_cost(999.0);
+    for(int i=0;i<costs.size();++i){
+        if(costs[i]<min_cost){
+            min_cost = costs[i];
+            min_index = i;
+        }
+    }
     
-  
   /**
    * TODO: Change return value here:
    */
