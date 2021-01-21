@@ -13,8 +13,12 @@ using std::vector;
 /**
  * TODO: change weights for cost functions.
  */
-const float REACH_GOAL = 0;
-const float EFFICIENCY = 0;
+ // .90/.10 --> 31s
+ // .85/.15 --> 32s
+ // .95/.05 --> 46s too long
+ // .80/.20 --> missed the goal
+const float REACH_GOAL = 0.90;//0;
+const float EFFICIENCY = 0.10;//0;
 
 // Here we have provided two possible suggestions for cost functions, but feel 
 //   free to use your own! The weighted cost over all cost functions is computed
