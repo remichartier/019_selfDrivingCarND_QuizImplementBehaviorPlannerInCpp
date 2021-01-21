@@ -46,7 +46,24 @@ vector<Vehicle> Vehicle::choose_next_state(map<int, vector<Vehicle>> &prediction
    *
    * TODO: Your solution here.
    */
-
+    
+    // only consider states which can be reached from current FSM state.
+    vector<string> possible_successor_states = successor_states();
+    
+    // keep track of the total cost of each state.
+    vector<float> costs;
+    //  for state in possible_successor_states:
+    for(int j=0;j<possible_successor_states.size();++j){
+      // generate a rough idea of what trajectory we would follow IF we chose this state.
+      // string state, map<int, vector<Vehicle>> &predictions
+      vector<Vehicle> trajectory_for_state = generate_trajectory(possible_successor_states[j],\
+                                                                predictions);
+      // calculate the "cost" associated with that trajectory.
+      // calculate_cost(const Vehicle &vehicle, 
+      //                 const map<int, vector<Vehicle>> &predictions, 
+      //                 const vector<Vehicle> &trajectory)
+            float cost_for_state = calculate_cost();
+    }
 
   /**
    * TODO: Change return value here:
